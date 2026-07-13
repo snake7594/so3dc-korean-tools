@@ -141,7 +141,9 @@ def hangul_characters() -> str:
 
 
 def extend_global_font(
-    original_archive: bytes, font_path: Path
+    original_archive: bytes,
+    font_path: Path,
+    gray_levels: int = FONT_GRAY_LEVELS,
 ) -> tuple[bytes, bytes, dict[str, int], dict[str, int]]:
     if sha256(original_archive) != GLOBAL_ARCHIVE_SHA256:
         raise ValueError("global archive SHA-256 mismatch")
@@ -175,10 +177,10 @@ def extend_global_font(
     characters = hangul_characters()
     if len(characters) != 14:
         raise AssertionError(f"translation no longer has 14 unique Hangul glyphs: {characters}")
-    # Four coverage levels keep the 22 px Noto Sans CJK KR outlines legible
-    # while allowing the extended font to fit the archive's fixed allocation.
+    # Coverage quantization keeps the 22 px outlines legible while allowing
+    # the extended font to fit the archive's fixed allocation.
     glyphs = render_glyphs(
-        characters, font_path, 24, 24, 24, gray_levels=FONT_GRAY_LEVELS
+        characters, font_path, 24, 24, 24, gray_levels=gray_levels
     )
     new_count = old_count + len(glyphs)
     if width_start + new_count > bitmap_start:

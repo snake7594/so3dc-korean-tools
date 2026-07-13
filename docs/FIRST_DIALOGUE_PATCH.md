@@ -1,5 +1,10 @@
 # 첫 대사 패치 분석
 
+> 이 문서는 Noto Sans CJK KR을 사용한 `v0.2.0-alpha.1`의 구조와 검증값을
+> 기록합니다. `v0.3.0-alpha.1`은 같은 첫 대사 변환을 NanumSquare Neo로 다시
+> 빌드한 뒤 초반 장면의 한자 bitmap 13개를 추가로 교체합니다. 새 빌드의 값은
+> [`EARLY_KANJI_READING_PATCH.md`](EARLY_KANJI_READING_PATCH.md)를 참고하세요.
+
 ## 대상
 
 - archive ID: `1220`

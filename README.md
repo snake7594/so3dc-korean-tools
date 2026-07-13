@@ -4,8 +4,31 @@
 숨겨진 tri-Ace 아카이브, SLZ 압축, `so3mclib` 메시지·폰트 형식을 분석하고
 한국어 출력 패치를 만드는 연구 도구입니다.
 
-`v0.2.0-alpha.1`은 [이슈 #1](https://github.com/snake7594/so3dc-korean-tools/issues/1)의
-게임 시작 후 첫 대사를 실제 메시지 ID 5에 넣습니다.
+`v0.3.0-alpha.1`은 첫 대사 한글 출력 패치에 NanumSquare Neo Bold 글리프를
+적용하고, 초반 호텔 장면에서 쓰이는 일본어 한자 13자의 bitmap을 확인용 한국어
+독음으로 바꿉니다.
+
+```text
+号 → 호    室 → 실    無 → 무    何 → 하
+当 → 당    一 → 일    切 → 절    人 → 인
+工 → 공    生 → 생    物 → 물    使 → 사    用 → 용
+```
+
+예를 들어 원래 화면의 다음 문구는 한자 부분만 한국어 독음으로 보입니다.
+
+```text
+当ホテルのプライベートビーチには
+一切の人工生物が使用されておりません。
+
+↓
+
+당ホテルのプライベートビーチには
+일절の인공생물が사용されておりません。
+```
+
+![초반 한자 독음 정적 글리프 렌더](assets/early_reading_preview.png)
+
+첫 대사도 이전 릴리스와 동일하게 유지됩니다.
 
 ```text
 소피아
@@ -15,12 +38,9 @@
 왜?
 ```
 
-원문의 의미와 진행 순서를 유지하면서 원래 124바이트 메시지 구간에 맞춘 축약
-번역입니다.
-
-![첫 대사 정적 글리프 렌더](assets/first_dialogue_preview.png)
-
-> 아직 전체 한글패치가 아닌 알파 단계의 첫 대사 검증판입니다.
+> 아직 전체 한글패치가 아닙니다. 한자 bitmap 교체와 NanumSquare Neo의 실제
+> 출력 상태를 확인하기 위한 알파 검증판이며, `v0.3.0-alpha.1`의 에뮬레이터
+> 런타임 검증은 사용자가 진행합니다.
 
 ## 지원 원본
 
@@ -32,87 +52,88 @@
 
 해시가 다른 덤프에는 릴리스 xdelta를 적용하지 마세요.
 
-## v0.2.0-alpha.1 xdelta 적용
+## v0.3.0-alpha.1 xdelta 적용
 
 GitHub Releases에서
-`SO3_DC_Disc1_Korean_First_Dialogue_v0.2.0-alpha.1.zip`을 받아 풀고, 동봉된
-xdelta를 다음 순서로 적용합니다. ZIP에는 OFL 원문과 체크섬도 들어 있습니다.
+`SO3_DC_Disc1_Korean_Kanji_Readings_Nanum_v0.3.0-alpha.1.zip`을 받아 풀고
+다음 순서로 적용합니다.
 
 ```powershell
 xdelta3 -d -s "SO3_DC_Disc1_original.iso" `
-  "SO3_DC_Disc1_Korean_First_Dialogue_v0.2.0-alpha.1.xdelta" `
-  "SO3_DC_Disc1_Korean_First_Dialogue.iso"
+  "SO3_DC_Disc1_Korean_Kanji_Readings_Nanum_v0.3.0-alpha.1.xdelta" `
+  "SO3_DC_Disc1_Korean_Kanji_Readings_Nanum.iso"
 ```
 
 검증 해시:
 
-- 릴리스 ZIP SHA-256:
-  `1B7C7E48F440D7F2B82CD65D0E31F025ED6F472FBBE83DE69922629875237893`
-- xdelta SHA-256:
-  `D0F053E5972D7F1E4C045D706DE028C00513DC814641A9A093BFAB3571C2788B`
+- 릴리스 ZIP SHA-256: `EE9DB79B1330A05882A35151D3A95458BDC3BC20FA6DFB8C9F29F276731DB0FE`
+- xdelta SHA-256: `A35D924CA7273DDA676D20AAB74815E3A3BB64DDF71CA212B7534780114DA5A3`
 - 생성 ISO SHA-256:
-  `BBC366A55DA0C2C985BB7E5329A7D2FE8674913995EEB4C81E9674C1E42AF27C`
+  `FD298A889002FF3AC23B43CF8433B1BE50EECC15ACE81E61DD48B759DF800F9B`
 
 ## 소스에서 ISO 생성
 
-Python 3.10 이상, `requirements.txt`, 한글을 지원하는 OFL 호환 TTF/OTF가
-필요합니다. 공식 릴리스는 Noto Sans CJK KR Regular 2.004와 Pillow 11.1.0으로
-만들었습니다. 해당 글꼴은 copyright © 2014-2021 Adobe이며
-[고정된 Noto CJK 2.004 소스](https://github.com/notofonts/noto-cjk/blob/523d033d6cb47f4a80c58a35753646f5c3608a78/Sans/OTF/Korean/NotoSansCJKkr-Regular.otf)에서
-받을 수 있습니다.
+Python 3.10 이상, `requirements.txt`, `NanumSquareNeo-cBd.ttf`가 필요합니다.
+폰트 파일은 원본 ISO와 같은 폴더에 두거나 `--font`로 경로를 지정합니다.
 
 ```powershell
 python -m pip install -r requirements.txt
-python tools/patch_first_dialogue.py `
+python tools/patch_early_kanji_readings.py `
   "SO3_DC_Disc1_original.iso" `
-  "SO3_DC_Disc1_Korean_First_Dialogue.iso" `
-  --font "NotoSansCJKkr-Regular.otf" `
-  --preview "first_dialogue_preview.png" `
+  "SO3_DC_Disc1_Korean_Kanji_Readings_Nanum.iso" `
+  --font "NanumSquareNeo-cBd.ttf" `
+  --preview "early_kanji_reading_preview.png" `
   --report "patch_report.json"
 ```
 
 공식 빌드 글꼴 SHA-256:
-`6BCB2A0703AA137E874FC2DFFA85F6C21BA9A67FA329E81B8C801663AF7E992A`
+`4749FA5691157CF56A59D297B45E88894A646846048018CD7A4117FFB2869767`
 
-폰트 파일 자체는 저장소나 릴리스에 넣지 않습니다. 사용한 Noto 글리프 파생물은
-SIL Open Font License 1.1을 따르며 원문은
-[`LICENSES/NotoSansCJK-OFL-1.1.txt`](LICENSES/NotoSansCJK-OFL-1.1.txt)에
-포함되어 있습니다. 저작권 고지는
-[`LICENSES/NotoSansCJK-COPYRIGHT.txt`](LICENSES/NotoSansCJK-COPYRIGHT.txt)를
+공식 빌드는 24×24 셀 안에 22px 글리프를 3단계 명암으로 양자화했습니다.
+NanumSquare Neo는 NAVER와 Sandoll이 제공하며 SIL Open Font License 1.1을
+따릅니다. 폰트 파일 자체는 저장소나 릴리스에 넣지 않습니다.
+저작권 고지와 라이선스 전문은
+[`LICENSES/NanumSquareNeo-COPYRIGHT.txt`](LICENSES/NanumSquareNeo-COPYRIGHT.txt)와
+[`LICENSES/NanumSquareNeo-OFL-1.1.txt`](LICENSES/NanumSquareNeo-OFL-1.1.txt)를
 참고하세요.
 
 ## 독립 검증
 
 ```powershell
-python tools/verify_first_dialogue_iso.py `
+python tools/verify_early_kanji_readings.py `
   "SO3_DC_Disc1_original.iso" `
-  "SO3_DC_Disc1_Korean_First_Dialogue.iso" `
-  --full-diff `
+  "SO3_DC_Disc1_Korean_Kanji_Readings_Nanum.iso" `
   --report "verification.json"
 
 python -m unittest discover -s tests -v
 ```
 
-최종 빌드는 다음을 통과했습니다.
+최종 빌드는 다음 정적 검증을 통과했습니다.
 
+- v0.3 전용 테스트 `13`개 및 전체 테스트 `28`개 통과
 - 숨겨진 6,144-entry 인덱스 불변
-- archive 8의 4개 root stream 검증
-- archive 1220 첫 PK1의 상위 record 12개 중 목표 1개만 내용 변경
-- 로컬 전체 추출 manifest의 root SLZ stream 63개 중 62개 decoded 내용 불변
-- 로컬 글리프 operand 108개를 빠짐없이 `+6` 이동하고 기존 72개 bitmap 보존
-- 4,689,854,464바이트 전수 비교에서 허용한 archive 8·1220 밖 변경 0바이트
-- xdelta 역적용 출력이 최종 ISO SHA-256과 일치
+- 전역 glyph count `292 → 306`, 압축 payload `25,383 / 25,440` bytes
+- archive 1220의 목표 bitmap 13개만 교체하고 width table과 메시지 bytecode 보존
+- 목표 record allocation `10,448` bytes 유지, 내부 미사용 공간 `572` bytes
+- 첫 PK1 table과 비목표 record 11개, 두 번째 PK1 package 불변
+- 4,689,854,464바이트 전수 비교에서 허용한 archive 8·1220 밖 변경 `0` bytes
 
-자세한 구조와 검증값은
-[`docs/FIRST_DIALOGUE_PATCH.md`](docs/FIRST_DIALOGUE_PATCH.md)를 참고하세요.
+구조와 상세 검증값은
+[`docs/EARLY_KANJI_READING_PATCH.md`](docs/EARLY_KANJI_READING_PATCH.md)와
+[`docs/releases/v0.3.0-alpha.1-verification.md`](docs/releases/v0.3.0-alpha.1-verification.md)를
+참고하세요.
 
 ## 현재 제한
 
-- 첫 대사만 한국어로 바꾼 알파 검증판입니다.
+- 첫 대사와 초반 호텔 장면의 한자 13자만 대상으로 합니다.
+- 한자 bitmap을 한국어 독음 bitmap으로 교체했을 뿐, 문장 전체를 번역하지는
+  않았습니다.
+- 같은 local glyph를 공유하는 해당 장면의 다른 메시지에서도 교체된 독음이
+  나타납니다.
 - 지원 원본의 archive 해시와 구조가 조금이라도 다르면 패처가 중단됩니다.
-- 릴리스 빌드는 고정 공간에 맞추기 위해 24×24 셀 안에 22px 글리프를 4단계
-  명암으로 양자화합니다.
-- ISO, 실행 파일, 추출 게임 데이터, BIOS, PCSX2 세이브스테이트, 상용 폰트는
+- `v0.3.0-alpha.1`은 정적 구조·해시 검증까지 완료했으며 에뮬레이터 출력 확인은
+  사용자 검증 항목입니다.
+- ISO, 실행 파일, 추출 게임 데이터, BIOS, PCSX2 세이브스테이트, 폰트 파일은
   포함하지 않습니다.
 
 ## 법적 고지

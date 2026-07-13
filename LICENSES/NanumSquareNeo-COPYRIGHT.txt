@@ -1,0 +1,24 @@
+NanumSquare Neo Bold (NanumSquareNeo-cBd.ttf)
+
+Font metadata notice:
+Copyright © 2022 NAVER Corp. All rights reserved.
+Font Designed by Sandoll Inc.
+NanumSquare Neo is a registered trademark of NAVER Corp.
+
+Manufacturer: Sandoll Inc.
+Designers: Seungeon Kim; Wonjin Oh; Haesung Kim; Junsu Kim;
+Jeongyeon Hyun; Yoonah Kim; Suhwa Jang
+
+Official Nanum font license notice:
+Copyright (c) 2010, NAVER Corporation (https://www.navercorp.com/)
+Reserved Font Name: NanumSquareNeo
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+Official license text:
+https://help.naver.com/service/30016/contents/18088?osType=PC&lang=ko
+
+See NanumSquareNeo-OFL-1.1.txt in this directory.
+
+The original TTF font file is not included in this project. The notice above
+acknowledges the font copyright holder and designers; it does not imply their
+endorsement of this unofficial game patch.
