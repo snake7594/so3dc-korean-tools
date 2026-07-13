@@ -1,0 +1,14 @@
+Noto Sans CJK KR Regular, Version 2.004
+
+Copyright © 2014-2021 Adobe (http://www.adobe.com/).
+Noto is a trademark of Google Inc.
+
+Official source:
+https://github.com/notofonts/noto-cjk/blob/523d033d6cb47f4a80c58a35753646f5c3608a78/Sans/OTF/Korean/NotoSansCJKkr-Regular.otf
+
+License:
+SIL Open Font License, Version 1.1
+See NotoSansCJK-OFL-1.1.txt in this directory.
+
+The font file is not distributed by this project. The v0.2.0-alpha.1 patch
+contains fourteen 24x24 derived Hangul glyph bitmaps.

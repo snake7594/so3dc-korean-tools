@@ -422,9 +422,18 @@ class Mclib:
         }
 
 
-def render_glyphs(text: str, font_path: Path, cell_width: int, cell_height: int, stride: int) -> list[tuple[int, bytes]]:
+def render_glyphs(
+    text: str,
+    font_path: Path,
+    cell_width: int,
+    cell_height: int,
+    stride: int,
+    gray_levels: int = 16,
+) -> list[tuple[int, bytes]]:
     if not text or "\0" in text or "\n" in text:
         raise ValueError("test text must be a non-empty, single line")
+    if gray_levels < 2 or gray_levels > 16:
+        raise ValueError("gray_levels must be between 2 and 16")
     font_size = max(8, cell_height - 2)
     font = ImageFont.truetype(str(font_path), font_size)
     rendered: list[tuple[int, bytes]] = []
@@ -439,7 +448,10 @@ def render_glyphs(text: str, font_path: Path, cell_width: int, cell_height: int,
         x = max(0, (cell_width - ink_w) // 2 - bbox[0])
         y = max(0, (cell_height - ink_h) // 2 - bbox[1])
         draw.text((x, y), character, font=font, fill=255)
-        pixels = [min(15, (value + 8) // 17) for value in image.getdata()]
+        pixels = [
+            round(value / 255 * (gray_levels - 1)) * 15 // (gray_levels - 1)
+            for value in image.getdata()
+        ]
         packed = bytearray()
         for i in range(0, len(pixels), 2):
             lo = pixels[i]
@@ -695,7 +707,12 @@ def main() -> None:
     )
     ap.add_argument("--message-id", type=int, required=True)
     ap.add_argument("--text", default="한글")
-    ap.add_argument("--font", type=Path, default=Path(r"C:\Windows\Fonts\malgun.ttf"))
+    ap.add_argument(
+        "--font",
+        type=Path,
+        required=True,
+        help="font with redistribution terms appropriate for the generated patch",
+    )
     ap.add_argument("--strategy", choices=("auto", "append", "reuse"), default="auto")
     ap.add_argument("--space-code", type=lambda v: int(v, 0), default=5)
     ap.add_argument(

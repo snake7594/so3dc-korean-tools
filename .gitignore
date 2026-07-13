@@ -4,8 +4,11 @@ __pycache__/
 *.bin
 *.elf
 *.slz
+*.slzpayload
 *.mclib
 *.xdelta
+*.p2s
+*.p2s.backup
 bin/
 obj/
 output/

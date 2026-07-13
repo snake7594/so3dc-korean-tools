@@ -25,12 +25,12 @@ archive 38의 message ID 1은 번호상 가장 앞선 공용 시스템 문자열
 | archive ID | 66 |
 | archive LBA / ISO offset | 240706 / `0x1D621000` |
 | archive sectors | 70 |
-| raw archive | `work/full_unpack/disc1/raw/0066.slz` |
+| raw archive | local extraction `output/disc1/raw/0066.slz` (not distributed) |
 | raw SHA-256 | `9FF2AACB6EFD2DDD33CFF55C5BAE46B32C06A6B9C2B413C372A70C100F11738C` |
 | stream ID / source offset | 57 / 0 |
 | SLZ mode | 2 |
 | compressed payload / decoded size | 128278 / 346112 |
-| decoded resource | `work/full_unpack/disc1/decoded/0066/s000057_d0_o00000000.mclib` |
+| decoded resource | local extraction `output/disc1/decoded/0066/s000057_d0_o00000000.mclib` |
 | decoded SHA-256 | `77E595E98AA886F74D8F27695D987642895D08C28A8CE3D5F243518D959ECDE4` |
 | geometry | 32x32, 4bpp, base 1, 624 slots |
 | mapping count | 1220 |
@@ -90,7 +90,7 @@ archive 38 stream 19 message ID 1은 완전히 렌더됐다.
 | archive sectors | 61 |
 | stream ID | 19 |
 | stream ISO offset | 489103360 (`0x1D272000`) |
-| decoded resource | `work/full_unpack/disc1/decoded/0038/s000019_d0_o00000000.mclib` |
+| decoded resource | local extraction `output/disc1/decoded/0038/s000019_d0_o00000000.mclib` |
 | decoded SHA-256 | `29C6CE3974A17290F4A21361022584F646C17B12FAD1D0A90620ACE14CF8462E` |
 | message ID / row | 1 / `0x80` |
 | text file offset / length | `0xF80` / 417 bytes |

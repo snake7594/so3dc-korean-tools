@@ -1,7 +1,8 @@
 # Star Ocean 3 Director's Cut (PS2 JP) unpack/font analysis
 
 Analysis date: 2026-07-13
-Input: `D:\ps2\Star Ocean Till the End of Time Director's Cut (Disc 1).iso`
+Input: Japanese Director's Cut Disc 1 (`SLPM-65438`), verified by the SHA-256
+listed in the repository README.
 
 ## Final result
 
@@ -59,8 +60,8 @@ rows match the original CUE algorithm.
 | FIS resources | 1,383 |
 | ELF overlays | 12 |
 
-The decoded output and machine-readable manifests are under
-`work/full_unpack/disc1`.
+These figures were measured from a local `output/disc1` extraction. Decoded
+game resources are intentionally not distributed.
 
 ### SLZ
 
@@ -257,23 +258,20 @@ main text font.
 
 ## Reproduction tools and reports
 
-- Full unpacker: `work/full_unpack/So3Unpack.csproj`
-- Unpacker usage: `work/full_unpack/README.md`
-- Extraction verification: `work/full_unpack/verify_extract.py`
-- Extraction report: `work/full_unpack/RESULTS.md`
+- Full unpacker: `unpacker/So3Unpack.csproj`
+- Unpacker usage: `unpacker/README.md`
+- Extraction verification: `unpacker/verify_extract.py`
 - Hidden-index utility: `tools/so3_index.py`
-- mclib catalog/union renderer: `work/kanji_deep/catalog_mclib.py`
-- mclib atlas renderer: `work/kanji_deep/render_mclib.py`
-- message renderer: `work/kanji_deep/render_messages.py`
-- Independent mclib verifier: `work/mclib_verify/verify_mclib.py`
-- Whole-disc message validator: `work/mclib_all_decode/analyze_all_mclib.py`
-- Whole-disc message report: `work/mclib_all_decode/REPORT.md`
-- Public-format research: `work/format_research/REPORT.md`
+- First-dialogue patcher: `tools/patch_first_dialogue.py`
+- First-dialogue verifier: `tools/verify_first_dialogue_iso.py`
+
+The one-off catalog, renderer, RAM-probe, and whole-disc analysis outputs used
+during research remain local because they contain extracted game data.
 
 Run the already-completed extraction verifier:
 
 ```powershell
-python work/full_unpack/verify_extract.py work/full_unpack/disc1
+python unpacker/verify_extract.py output/disc1
 ```
 
 The latest verification result is `errors=0`.

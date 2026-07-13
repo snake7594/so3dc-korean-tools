@@ -12,9 +12,9 @@ decoded entries partition the hidden disc area.
 Run the complete extraction:
 
 ```powershell
-dotnet run -c Release --project work/full_unpack/So3Unpack.csproj -- `
-  "D:\ps2\Star Ocean Till the End of Time Director's Cut (Disc 1).iso" `
-  work/full_unpack/disc1 --raw-mode full --decoded-mode all --resume
+dotnet run -c Release --project unpacker/So3Unpack.csproj -- `
+  "SO3_DC_Disc1_original.iso" `
+  "output/disc1" --raw-mode full --decoded-mode all --resume
 ```
 
 Space-saving modes:
