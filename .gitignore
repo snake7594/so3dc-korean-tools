@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.iso
+*.bin
+*.elf
+*.slz
+*.mclib
+*.xdelta
+bin/
+obj/
+output/
+work/
